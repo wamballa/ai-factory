@@ -46,11 +46,14 @@ Ubuntu VM
 setup.md
     Setup instructions for the AI Factory environment
 
-TODO.md
-    Documentation tasks for improving the setup guide
-
 AGENTS.md
     Instructions controlling how Codex behaves in this directory
+
+../../TODO.md
+    Root task board used by all agents
+
+../../templates/project-template/
+    Scaffold used for new micro-SaaS projects
 
 ## Purpose of Documentation Agent
 

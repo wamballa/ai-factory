@@ -47,9 +47,6 @@ Agents collaborate through files in ../../memory.
 inbox.md
     Messages between agents
 
-tasks.md
-    Shared task queue
-
 ideas.md
     Discovered SaaS opportunities
 
@@ -71,12 +68,16 @@ Always read CONTEXT.md before making documentation changes.
 
 ## Task Management
 
-A file called TODO.md contains documentation tasks.
+The root file ../../TODO.md is the single task board for all work.
 
 When working:
 
-1. Read TODO.md
+1. Read ../../TODO.md
 2. Select the highest priority unfinished task
 3. Complete the task
 4. Update documentation files
-5. Move completed tasks to the Done section
+5. Move completed tasks to the Completed section
+
+## Project Templates
+
+When creating a new project, start from ../../templates/project-template/.

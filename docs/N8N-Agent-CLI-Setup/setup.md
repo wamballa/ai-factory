@@ -120,18 +120,48 @@ codex
 1. Move to workspace:
 
 ```bash
-cd ~/ai-factory/projects/research-factory
+cd ~/ai-factory
 ```
 
-2. Initialize Git memory/history:
+2. Initialize root monorepo history:
 
 ```bash
 git init
 git add .
-git commit -m "initial project memory"
+git commit -m "initial ai-factory memory"
 ```
 
-## 8. Install Docker
+3. Add a root `.gitignore` before large commits:
+
+```bash
+cat > .gitignore <<'EOF'
+.n8n/
+node_modules/
+__pycache__/
+.venv/
+.env
+.env.*
+*.log
+EOF
+git add .gitignore
+git commit -m "add root gitignore"
+```
+
+## 8. Use the Project Template for New Micro-SaaS Work
+
+1. Scaffold new projects from the shared template:
+
+```bash
+cp -r templates/project-template projects/<new-project-name>
+```
+
+2. Fill in project-specific details in:
+- `projects/<new-project-name>/README.md`
+- `projects/<new-project-name>/CONTEXT.md`
+
+3. Track all tasks in root `TODO.md` (do not create project-specific task files).
+
+## 9. Install Docker
 
 1. Install Docker:
 
@@ -147,7 +177,7 @@ sudo usermod -aG docker $USER
 
 3. Log out and back in to apply group membership.
 
-## 9. Run n8n in Docker
+## 10. Run n8n in Docker
 
 1. Start n8n:
 
@@ -159,7 +189,7 @@ docker run -it --rm \
 docker.n8n.io/n8nio/n8n
 ```
 
-## 10. Access n8n Web UI
+## 11. Access n8n Web UI
 
 1. Open this URL on the Windows host browser:
 
@@ -170,7 +200,7 @@ http://192.168.68.84:5678
 2. Do not use `localhost`.
 3. Create the n8n owner account.
 
-## 11. Create SSH Credentials in n8n
+## 12. Create SSH Credentials in n8n
 
 1. In n8n, create SSH credentials with:
 2. Host: `192.168.68.84`
@@ -178,7 +208,7 @@ http://192.168.68.84:5678
 4. User: `ai`
 5. Authentication: Password
 
-## 12. Test SSH Execution in n8n
+## 13. Test SSH Execution in n8n
 
 1. Add node: `SSH -> Execute Command`.
 2. Run command:
@@ -193,17 +223,17 @@ pwd
 /home/ai
 ```
 
-## 13. Correct n8n -> Codex Command
+## 14. Correct n8n -> Codex Command
 
 1. In the same `SSH -> Execute Command` node, use a non-interactive Codex command:
 
 ```bash
-cd ~/ai-factory/projects/research-factory && codex exec "Review current files and suggest the next implementation task."
+cd ~/ai-factory && codex exec "Review current files and suggest the next implementation task."
 ```
 
 2. This is the correct pattern for n8n because `codex exec` is non-interactive.
 
-## 14. Example n8n Workflow
+## 15. Example n8n Workflow
 
 1. Add `Manual Trigger`.
 2. Add `Set` node with field `prompt`.
@@ -211,7 +241,7 @@ cd ~/ai-factory/projects/research-factory && codex exec "Review current files an
 4. Command example:
 
 ```bash
-cd ~/ai-factory/projects/research-factory && codex exec "{{$json.prompt}}"
+cd ~/ai-factory && codex exec "{{$json.prompt}}"
 ```
 
 5. Connect nodes in order:
@@ -220,7 +250,7 @@ cd ~/ai-factory/projects/research-factory && codex exec "{{$json.prompt}}"
 Manual Trigger -> Set(prompt) -> SSH Execute Command
 ```
 
-## 15. Troubleshooting
+## 16. Troubleshooting
 
 1. `ssh: connect to host ... port 22: Connection refused`
 2. Fix:
@@ -256,3 +286,34 @@ ip addr
 ```
 
 10. Open `http://<vm-ip>:5678` from Windows browser.
+
+11. `git@github.com: Permission denied (publickey)`
+12. Create and load an SSH key in the VM:
+
+```bash
+ssh-keygen -t ed25519 -C "your_github_email"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+```
+
+13. Add the full public key line to GitHub:
+14. `GitHub -> Settings -> SSH and GPG keys -> New SSH key`
+15. Set remote and push:
+
+```bash
+git remote add origin git@github.com:<github-user>/<repo>.git
+git branch -M main
+ssh -T git@github.com
+git push -u origin main
+```
+
+16. If you saved the key in a custom path by mistake, move and add it:
+
+```bash
+mv ~/ai-factory/<custom-key-name> ~/.ssh/
+mv ~/ai-factory/<custom-key-name>.pub ~/.ssh/
+chmod 600 ~/.ssh/<custom-key-name>
+chmod 644 ~/.ssh/<custom-key-name>.pub
+ssh-add ~/.ssh/<custom-key-name>
+```
