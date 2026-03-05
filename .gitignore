@@ -1,0 +1,46 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Logs/temp
+*.log
+tmp/
+temp/
+
+# Build/artifacts
+dist/
+build/
+coverage/
+
+# Terraform/infra
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Secrets/keys
+*.pem
+*.key
+*.crt
+
+# n8n local instance data
+.n8n/
+
+# Codex/agent local state (if present)
+.codex/
